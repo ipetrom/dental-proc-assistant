@@ -12,6 +12,17 @@ from openai_utils import ask_openai
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+@app.get("/")
+async def root():
+    return {
+        "message": "Dental Recommendation API", 
+        "available_procedures": [
+            "wypelnienie_dwupowierzchniowe",
+            "wypelnienie_jednopowierzchniowe", 
+            "wypelnienie_wielopowierzchniowe"
+        ]
+    }
+
 @app.get("/procedure/{procedure_id}")
 async def procedure_template(request: Request, procedure_id: str):
     # 1. Pobierz opisy
