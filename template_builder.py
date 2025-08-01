@@ -1,6 +1,5 @@
 import json
 
-
 def get_descriptions_for_procedure(procedure_id: str, json_path: str = "descriptions.json") -> list:
     """
     Zwraca listę opisów dla danej procedury na podstawie procedure_id.
@@ -49,3 +48,30 @@ def build_template_prompt(descriptions: list[str]) -> str:
     return prompt
 
 #print(build_template_prompt(get_descriptions_for_procedure("wypelnienie_dwupowierzchniowe", "descriptions.json")))
+
+def parse_fields_from_llm(llm_response: str) -> list[dict]:
+    """
+    Parsuje odpowiedź LLM (string w formacie JSON) na listę słowników.
+
+    Args:
+        llm_response (str): Odpowiedź z LLM, oczekiwana w formacie JSON
+
+    Returns:
+        list[dict]: Lista pól i opcji do template
+
+    Raises:
+        ValueError: Jeśli nie uda się sparsować JSONa
+    """
+    try:
+        # Często LLM zwraca trochę zbędnych znaków, więc najpierw oczyszczamy
+        llm_response = llm_response.strip()
+        # Usuń niepotrzebny kod bloków, jeśli jest (np. ```json ... ```)
+        if llm_response.startswith("```json"):
+            llm_response = llm_response[7:]
+        if llm_response.endswith("```"):
+            llm_response = llm_response[:-3]
+        # Próbuj parsować JSON
+        return json.loads(llm_response)
+    except Exception as e:
+        raise ValueError(f"Błąd parsowania odpowiedzi LLM jako JSON: {e}\nOdpowiedź:\n{llm_response}")
+
