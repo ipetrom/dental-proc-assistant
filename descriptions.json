@@ -1,0 +1,35 @@
+[
+{
+    "procedure_id": "wypelnienie_dwupowierzchniowe",
+    "procedure_name": "Wypełnienie dwupowierzchniowe (plomba średnia)",
+    "descriptions": [
+      "Ząb 26 – ubytek klasy II obejmujący powierzchnie mezjalną i okluzyjną (MO). Koferdam, matryca sekcyjna + pierścień. Kompozyt bulk‑fill do 4 mm, warstwa wierzchnia nanohybrydowa. Punkt styczny prawidłowo odtworzony.",
+      "Ząb 45 – próchnica wtórna klasy II DO. Po usunięciu starego amalgamatu założono podkład glasionomerowy o wysokim wydzielaniu fluoru, wypełnienie kompozytowe typu ormocer. Utwardzanie 3×10 s. Sensacja na zimno nieobecna.",
+      "Ząb 36 – ubytek klasy II MO z poszerzonym progiem. Matryca konturowa, insert flowable, odbudowa warstwowa. Kontrola RTG potwierdza brak przewieszek. Pacjent zgłasza prawidłowe zwarcie.",
+      "Ząb 14 – ubytek klasy II DO w zębie jednokorzeniowym. Adhesive uniwersalny w trybie self‑etch, kompozyt giomerowy, polerka spiralna. Znieczulenie nasiękowe artykaina 1,7 ml. Tkliwość perkusyjna ujemna.",
+      "Ząb 47 – ubytek klasy II MOD, ale wypełnienie dotyczy tylko M + O (część dystalna nienaruszona). System pierścieniowy V3, dwie warstwy kompozytu konwencjonalnego. Punkt styku i bruzdy anatomicznie odtworzone."
+    ]
+  },
+  {
+    "procedure_id": "wypelnienie_jednopowierzchniowe",
+    "procedure_name": "Wypełnienie jednopowierzchniowe (plomba mała)",
+    "descriptions": [
+      "Ząb 15 – opracowanie ubytku próchnicowego klasy I na powierzchni okluzyjnej. Adhesive 7. generacji, wypełnienie kompozytem nanohybrydowym. Utwardzanie 20 s, polerowanie gumkami silikonowymi. Brak dolegliwości po zabiegu.",
+      "Ząb 24 – ubytek klasy V w okolicy szyjki, powierzchnia policzkowa. Wytrawianie 37 % H3PO4 15 s, glasjonomer kompomerowy jako liner, warstwa kompozytu flow. Pacjent nie zgłasza nadwrażliwości.",
+      "Ząb 46 – niewielki ubytek klasy I na powierzchni centralnej bruzdy. Koferdam, piaskowanie Al2O3 27 μm, system jednoskładnikowy self‑etch, kompozyt bulk‑fill 4 mm, światło 40 s. Zwarcie prawidłowe.",
+      "Ząb 31 – ubytek abrazji klasy VI na brzegu siecznym. Znieczulenie powierzchniowe lidokaina 10%. Kompozyt mikrohybrydowy, na koniec impregnacja żywicą ochronną. Estetyka przywrócona.",
+      "Ząb 17 – ubytek klasy I na skośnej bruzdzie. Selektiv‑etch, bonding, kompozyt giomerowy. Polerowanie dyskami Al‑O. Ząb bezbolesny, kontrola okluzji OK."
+    ]
+  },
+  {
+    "procedure_id": "wypelnienie_wielopowierzchniowe",
+    "procedure_name": "Wypełnienie wielopowierzchniowe (plomba duża)",
+    "descriptions": [
+      "Ząb 37 – rozległy ubytek klasy II MOD z pęknięciem guzka policzkowego. Opracowanie turbiną z chłodzeniem wodnym, silikonowa matryca anatomiczna, odbudowa warstwowa kompozytem high‑strength. Guzek policzkowy pokryty warstwą cuspal‑coverage 2 mm.",
+      "Ząb 16 – ubytek klasy II MODL (mezjo‑okluzyjno‑dystalno‑językowy). Podniesienie progu dystalnego glasionomerem modyfikowanym żywicą, odbudowa kompozytowa z efektem „deep margin elevation”. Kontrola zwarcia i artykulacji prawidłowa.",
+      "Ząb 46 – próchnica rozległa klasy II MOD + przebarwiony stary kompozyt. Po znieczuleniu przewodowym (n. alveolaris inferior) całkowita wymiana materiału, odbudowa w technice bulk‑and‑cap (bulk‑fill + warstwa overlay). RTG końcowe potwierdza szczelność.",
+      "Ząb 25 – ubytek klasy III + V obejmujący kąt sieczny i szyjkę. Koferdam, matryca transparentna, wielowarstwowa odbudowa od strony podniebiennej i policzkowej, kompozyt mikrofill dla estetyki szkliwa. Szlifowanie gumkami diamentowymi, wysokie lustro.",
+      "Ząb 27 – duży ubytek klasy II MODP (mezjo‑okluzyjno‑dystalno‑podniebienny) z utratą guzka. Wykonano core z kompozytu SDR, a następnie warstwę okrywającą nano‑ceramiczną. Plan controlek co 6 mies."
+    ]
+  }
+]
