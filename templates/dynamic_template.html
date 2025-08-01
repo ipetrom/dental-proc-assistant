@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamiczny Template Procedury</title>
+</head>
+<body>
+    <h2>Wypełnij informacje o procedurze:</h2>
+    <form method="post">
+        {% for field in fields %}
+            <div>
+                <label><b>{{ field.field }}:</b></label>
+                <select name="{{ field.field }}">
+                    {% for option in field.options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+                <!-- Pole 'Other' -->
+                <input type="text" name="{{ field.field }}_other" placeholder="Inna opcja (Other)">
+            </div>
+            <br>
+        {% endfor %}
+        <button type="submit">Zatwierdź</button>
+    </form>
+</body>
+</html>
