@@ -24,15 +24,28 @@ def get_descriptions_for_procedure(procedure_id: str, json_path: str = "descript
 
 def build_template_prompt(descriptions: list[str]) -> str:
     """
-    Buduje szablon zapytania na podstawie opisów.
+    Buduje prompt dla LLM, na podstawie listy opisów procedur.
 
     Args:
-        descriptions (list[str]): Lista opisów do uwzględnienia w szablonie
+        descriptions (list[str]): Lista opisów danej procedury
 
     Returns:
-        str: Zbudowany szablon zapytania
+        str: Gotowy prompt do wysłania do LLM (OpenAI)
     """
-    prompt = "Oto opisy dla procedury:\n"
-    for desc in descriptions:
-        prompt += f"- {desc}\n"
+    prompt = (
+        "Based on the following descriptions of a dental procedure, generate a form template with fields to be filled in by the dentist after performing the procedure.\n"
+        "For each field, suggest the 3 most common values and include an 'Other' option.\n\n"
+        "Descriptions:\n"
+    )
+    for idx, desc in enumerate(descriptions, 1):
+        prompt += f"{idx}. {desc}\n"
+    prompt += (
+        "\nReturn the response in JSON format:\n"
+        "[\n"
+        "  {\"field\": \"Powierzchnia\", \"options\": [\"okluzyjna\", \"mezjalna\", \"dystalna\", \"Other\"]},\n"
+        "  ...\n"
+        "]"
+    )
     return prompt
+
+#print(build_template_prompt(get_descriptions_for_procedure("wypelnienie_dwupowierzchniowe", "descriptions.json")))
