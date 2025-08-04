@@ -88,34 +88,35 @@ def prepare_template_context(fields: list[dict]) -> dict:
     """
     return {"fields": fields}
 
-def build_natural_text_prompt(fields: list[dict]) -> str:
+def build_story_template_prompt(fields: list[dict]) -> str:
     """
-    Buduje prompt dla LLM, aby na podstawie listy pól i opcji wygenerował przykładowy naturalny opis zabiegu,
-    w którym zmienne fragmenty są łatwo zamienne (np. do późniejszego wyboru przez lekarza).
+    Buduje prompt dla LLM, żeby na podstawie listy pól i opcji wygenerował naturalny, 
+    spójny opis procedury stomatologicznej z placeholderami w kwadratowych nawiasach.
 
     Args:
-        fields (list[dict]): Lista pól z opcjami
+        fields (list[dict]): Lista słowników zawierających 'field' i 'options'
 
     Returns:
-        str: Prompt do wysłania do LLM
+        str: Gotowy prompt do wysłania do LLM
     """
-    example = (
-        "Example format:\n"
-        "Tooth 47 – class II MOD cavity, but the filling only covers M + O (distal part untouched). V3 ring system, two layers of conventional composite. Contact point and fissures anatomically restored.\n"
-        "\n"
-        "Generate a similar, natural and concise dental procedure summary in Polish, where each important information is clearly separated and replaceable by a doctor (for each of the following fields, use a bracket for the value, e.g. Tooth: [Tooth], Filling material: [Material], etc.)."
-        "\n"
-        "Make the style sound like a real medical record comment. Use the field names as context.\n\n"
-        "Fields:\n"
+    prompt = (
+        "You are an assistant for a dental documentation system.\n"
+        "Generate a concise, natural, professional summary of a dental procedure in Polish.\n"
+        "For each of the fields below, use a placeholder in square brackets, e.g. [Ząb], [Klasa ubytku], etc.\n"
+        "Connect all information in a single, natural narrative (not a list), like a medical note.\n"
+        "Use medical language and keep it short.\n"
+        "Here are the fields and example options:\n\n"
     )
     for field in fields:
         name = field.get("field", "")
-        example += f"- {name}: [{name}]\n"
-    prompt = (
-        "You are an assistant for a dental procedure documentation system.\n"
-        "Using the following list of fields, generate an example of a full, natural and human-like procedure comment enhancing user-friendly features adding emojis, "
-        "using placeholders for values (so it can be filled by a doctor). "
-        "Keep the order logical for medical notes and use professional language.\n"
-        + example
+        options = [opt for opt in field.get("options", []) if opt.lower() != "other"]
+        if options:
+            options_preview = ", ".join(options[:3])
+            prompt += f"- {name}: {options_preview}\n"
+        else:
+            prompt += f"- {name}\n"
+    prompt += (
+        "\nReturn ONLY the template sentence with placeholders in square brackets. "
+        "Do NOT use bullet points. Example: 'Ząb [Ząb] – ubytek klasy [Klasa ubytku] obejmujący powierzchnię [Powierzchnia]...'\n"
     )
     return prompt
