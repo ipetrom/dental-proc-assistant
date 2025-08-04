@@ -32,8 +32,8 @@ def build_template_prompt(descriptions: list[str]) -> str:
         str: Gotowy prompt do wysłania do LLM (OpenAI)
     """
     prompt = (
-        "Based on the following descriptions of a dental procedure, generate a form template with fields to be filled in by the dentist after performing the procedure.\n"
-        "For each field, suggest the 3 most common values and include an 'Other' option.\n\n"
+        "You are a helpful assistant for dental procedures. Based on the following descriptions of a dental procedure, generate a form template with fields to be filled in by the dentist after performing the procedure.\n"
+        "For each field, suggest the ONLY 3 most common values and include an 'Other' option.\n\n"
         "Descriptions:\n"
     )
     for idx, desc in enumerate(descriptions, 1):
@@ -43,7 +43,8 @@ def build_template_prompt(descriptions: list[str]) -> str:
         "[\n"
         "  {\"field\": \"Powierzchnia\", \"options\": [\"okluzyjna\", \"mezjalna\", \"dystalna\", \"Other\"]},\n"
         "  ...\n"
-        "]"
+        "]"\
+        "\nTemplate should be user-friendly and easy to fill out, including emojis. In addition, make the template as human-like as possible\n"
     )
     return prompt
 
@@ -86,3 +87,35 @@ def prepare_template_context(fields: list[dict]) -> dict:
         dict: Kontekst do przekazania do template (np. {"fields": fields})
     """
     return {"fields": fields}
+
+def build_natural_text_prompt(fields: list[dict]) -> str:
+    """
+    Buduje prompt dla LLM, aby na podstawie listy pól i opcji wygenerował przykładowy naturalny opis zabiegu,
+    w którym zmienne fragmenty są łatwo zamienne (np. do późniejszego wyboru przez lekarza).
+
+    Args:
+        fields (list[dict]): Lista pól z opcjami
+
+    Returns:
+        str: Prompt do wysłania do LLM
+    """
+    example = (
+        "Example format:\n"
+        "Tooth 47 – class II MOD cavity, but the filling only covers M + O (distal part untouched). V3 ring system, two layers of conventional composite. Contact point and fissures anatomically restored.\n"
+        "\n"
+        "Generate a similar, natural and concise dental procedure summary in Polish, where each important information is clearly separated and replaceable by a doctor (for each of the following fields, use a bracket for the value, e.g. Tooth: [Tooth], Filling material: [Material], etc.)."
+        "\n"
+        "Make the style sound like a real medical record comment. Use the field names as context.\n\n"
+        "Fields:\n"
+    )
+    for field in fields:
+        name = field.get("field", "")
+        example += f"- {name}: [{name}]\n"
+    prompt = (
+        "You are an assistant for a dental procedure documentation system.\n"
+        "Using the following list of fields, generate an example of a full, natural and human-like procedure comment enhancing user-friendly features adding emojis, "
+        "using placeholders for values (so it can be filled by a doctor). "
+        "Keep the order logical for medical notes and use professional language.\n"
+        + example
+    )
+    return prompt

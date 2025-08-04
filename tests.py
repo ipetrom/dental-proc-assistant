@@ -1,5 +1,5 @@
 from openai_utils import ask_openai 
-from template_builder import get_descriptions_for_procedure, build_template_prompt, parse_fields_from_llm, prepare_template_context
+from template_builder import get_descriptions_for_procedure, build_template_prompt, parse_fields_from_llm, prepare_template_context, build_natural_text_prompt
 
 #print(ask_openai("Hello, how are you?"))  
 
@@ -9,12 +9,8 @@ fields_json_str = ask_openai(prompt)
 
 fields = parse_fields_from_llm(fields_json_str)
 #print(fields)
+natural_text_prompt = build_natural_text_prompt(fields)
+print(natural_text_prompt)
 
-template_context = prepare_template_context(fields)
+#template_context = prepare_template_context(fields)
 #print(template_context)
-
-from fastapi import Request
-from fastapi.templating import Jinja2Templates
-from template_builder import prepare_template_context
-
-templates = Jinja2Templates(directory="templates")
