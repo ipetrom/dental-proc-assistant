@@ -78,18 +78,6 @@ def parse_fields_from_llm(llm_response: str) -> list[dict]:
     except Exception as e:
         raise ValueError(f"Błąd parsowania odpowiedzi LLM jako JSON: {e}\nOdpowiedź:\n{llm_response}")
 
-def prepare_template_context(fields: list[dict]) -> dict:
-    """
-    Przygotowuje kontekst do renderowania szablonu Jinja2.
-
-    Args:
-        fields (list[dict]): Lista pól z opcjami (wynik z LLM)
-
-    Returns:
-        dict: Kontekst do przekazania do template (np. {"fields": fields})
-    """
-    return {"fields": fields}
-
 def build_story_template_prompt(fields: list[dict]) -> str:
     """
     Buduje prompt dla LLM, żeby na podstawie listy pól i opcji wygenerował naturalny, 
