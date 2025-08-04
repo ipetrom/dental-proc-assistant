@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dynamiczny Template Procedury</title>
+    <title>Opis zabiegu</title>
+    <style>
+        select, input[type="text"] {
+            margin: 0 4px;
+            padding: 2px 6px;
+        }
+        input[type="text"] {
+            width: 120px;
+        }
+        label {
+            font-weight: normal;
+        }
+    </style>
 </head>
 <body>
-    <h2>Wypełnij informacje o procedurze:</h2>
+    <h2>Opis zabiegu (edytowalny fragmentami):</h2>
     <form method="post">
-        {% for field in fields %}
-            <div>
-                <label><b>{{ field.field }}:</b></label>
-                <select name="{{ field.field }}">
-                    {% for option in field.options %}
-                        <option value="{{ option }}">{{ option }}</option>
-                    {% endfor %}
-                </select>
-                <!-- Pole 'Other' -->
-                <input type="text" name="{{ field.field }}_other" placeholder="Inna opcja (Other)">
-            </div>
-            <br>
-        {% endfor %}
+        <p style="font-size: 1.1em;">
+            {% for token in tokens %}
+                {% if token.type == "text" %}
+                    {{ token.value|safe }}
+                {% elif token.type == "placeholder" %}
+                    <select name="{{ token.value }}">
+                        {% for option in fields_map[token.value] %}
+                            <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" name="{{ token.value }}_other" placeholder="Inna opcja" />
+                {% endif %}
+            {% endfor %}
+        </p>
         <button type="submit">Zatwierdź</button>
     </form>
 </body>
