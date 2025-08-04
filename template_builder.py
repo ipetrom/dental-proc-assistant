@@ -1,4 +1,6 @@
 import json
+import re
+
 
 def get_descriptions_for_procedure(procedure_id: str, json_path: str = "descriptions.json") -> list:
     """
@@ -120,3 +122,43 @@ def build_story_template_prompt(fields: list[dict]) -> str:
         "Do NOT use bullet points. Example: 'Ząb [Ząb] – ubytek klasy [Klasa ubytku] obejmujący powierzchnię [Powierzchnia]...'\n"
     )
     return prompt
+
+def extract_placeholders_from_template(template_str: str) -> list[str]:
+    """
+    Wyodrębnia placeholdery (w kwadratowych nawiasach) z tekstowego szablonu LLM.
+
+    Args:
+        template_str (str): Szablon tekstowy z placeholderami (np. '[Ząb]', '[Powierzchnia]')
+
+    Returns:
+        list[str]: Lista nazw placeholderów w kolejności występowania
+    """
+    return re.findall(r"\[(.*?)\]", template_str)
+
+def tokenize_template(template_str: str) -> list[dict]:
+    """
+    Dzieli szablon tekstowy na fragmenty tekstowe i placeholdery.
+
+    Args:
+        template_str (str): Tekst szablonu z placeholderami
+
+    Returns:
+        list[dict]: Lista słowników typu {'type': 'text'/'placeholder', 'value': str}
+    """
+    pattern = re.compile(r"\[(.*?)\]")
+    result = []
+    last_index = 0
+
+    for match in pattern.finditer(template_str):
+        # Dodaj tekst przed placeholderem (jeśli jest)
+        if match.start() > last_index:
+            text_part = template_str[last_index:match.start()]
+            if text_part:
+                result.append({'type': 'text', 'value': text_part})
+        # Dodaj placeholder
+        result.append({'type': 'placeholder', 'value': match.group(1)})
+        last_index = match.end()
+    # Dodaj ewentualny tekst na końcu
+    if last_index < len(template_str):
+        result.append({'type': 'text', 'value': template_str[last_index:]})
+    return result
