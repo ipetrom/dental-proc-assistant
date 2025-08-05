@@ -99,11 +99,13 @@ streamlit run app.py
 
 ## 🔮 Future Enhancements
 
-- Integration with dental practice management systems
+- Dynamic procedure creation and custom template management
+- RAG (Retrieval-Augmented Generation) system for enhanced medical knowledge integration
 - Multi-language support for international practices
-- Advanced analytics on procedure patterns
+- Advanced analytics on procedure patterns and treatment outcomes
 - Voice-to-text integration for hands-free documentation
-- HIPAA-compliant cloud deployment
+- Mobile application for chairside documentation
+- Computer vision integration for dental image analysist
 
 ## ⚠️ Disclaimer
 
