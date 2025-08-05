@@ -58,7 +58,8 @@ dentist_recommendation/
 
 See the application in action below - demonstrating the complete workflow from procedure selection to final documentation generation:
 
-*[Demo video would be attached here]*
+https://github.com/user-attachments/assets/0f0ffc39-7e24-4358-8bb6-d765e08baedb
+
 
 ## 🛠️ Installation & Setup
 
