@@ -1,7 +1,7 @@
 # 🦷 Dental Procedure Assistant - AI-Powered Documentation System
 
 > **Educational Project & Concept Testing**  
-> This is an educational proof-of-concept project designed to explore AI-powered solutions for healthcare documentation. It demonstrates how machine learning can assist medical professionals in streamlining routine administrative tasks.
+> This is an educational proof-of-concept project designed to explore AI-powered solutions for healthcare documentation. It demonstrates how AI can assist medical professionals in streamlining routine administrative tasks.
 
 ## 🎯 Problem Statement
 
