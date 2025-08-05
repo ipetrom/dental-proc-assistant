@@ -46,7 +46,7 @@ def build_template_prompt(descriptions: list[str]) -> str:
         "  {\"field\": \"Powierzchnia\", \"options\": [\"okluzyjna\", \"mezjalna\", \"dystalna\", \"Other\"]},\n"
         "  ...\n"
         "]"\
-        "\nTemplate should be user-friendly and easy to fill out, including emojis. In addition, make the template as human-like as possible\n"
+        "\nTemplate should be user-friendly and easy to fill out. In addition, make the template as human-like as possible\n"
     )
     return prompt
 

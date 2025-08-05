@@ -27,7 +27,9 @@
                         {% for option in fields_map[token.value] %}
                             <option value="{{ option }}">{{ option }}</option>
                         {% endfor %}
+                        {% if 'Other' not in fields_map[token.value] %}
                         <option value="Other">Other</option>
+                        {% endif %}
                     </select>
                     <input type="text" name="{{ token.value }}_other" placeholder="Inna opcja" />
                 {% endif %}
