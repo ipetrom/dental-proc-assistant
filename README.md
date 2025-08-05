@@ -43,15 +43,16 @@ Generates professional, coherent descriptions like:
 - **Template Engine**: Jinja2 for dynamic content rendering
 
 ## 📁 Project Structure
-
+```
 dentist_recommendation/
 ├── app.py # Streamlit application
 ├── main.py # FastAPI backend
 ├── template_builder.py # Core AI template generation logic
 ├── openai_utils.py # OpenAI API integration
-├── descriptions.json # Training data with procedure descriptions
+├── descriptions.json # Data with procedure descriptions
 ├── templates/ # HTML templates for web interface
 ├── tests.py # Testing utilities
+```
 
 ## 🎬 Demo Video
 
