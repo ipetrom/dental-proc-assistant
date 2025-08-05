@@ -105,7 +105,7 @@ streamlit run app.py
 - Advanced analytics on procedure patterns and treatment outcomes
 - Voice-to-text integration for hands-free documentation
 - Mobile application for chairside documentation
-- Computer vision integration for dental image analysist
+- Computer vision integration for dental image analysis
 
 ## ⚠️ Disclaimer
 
