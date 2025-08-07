@@ -1,5 +1,6 @@
 import json
 import re
+import xml.etree.ElementTree as ET
 
 
 def get_descriptions_for_procedure(procedure_id: str, json_path: str = "descriptions.json") -> list:
@@ -50,6 +51,42 @@ def build_template_prompt(descriptions: list[str]) -> str:
     )
     return prompt
 
+def build_template_prompt2(descriptions: list[str]) -> str:
+    """
+    Buduje prompt dla LLM, na podstawie listy opisów procedur.
+
+    Args:
+        descriptions (list[str]): Lista opisów dla danej procedury
+
+    Returns:
+        str: Gotowy prompt do wysłania do LLM (OpenAI)
+    """
+    prompt = (
+        "You are a helpful assistant for dental procedures. Based on the following descriptions of a dental procedure, generate a form template with fields to be filled in by the dentist after performing the procedure.\n"
+        "For each field, suggest ONLY the 3 most common values and include an 'Other' option.\n\n"
+        "Descriptions:\n"
+    )
+    for idx, desc in enumerate(descriptions, 1):
+        prompt += f"{idx}. {desc}\n"
+    prompt += (
+        "\nReturn the response in XML format with the following structure (do NOT add any explanation or extra text):\n"
+        "<response>\n"
+        "    <field>\n"
+        "        <name>Powierzchnia</name>\n"
+        "        <options>\n"
+        "            <option>okluzyjna</option>\n"
+        "            <option>mezjalna</option>\n"
+        "            <option>dystalna</option>\n"
+        "            <option>Other</option>\n"
+        "        </options>\n"
+        "    </field>\n"
+        "    ...\n"
+        "</response>\n"
+        "The response should only contain this XML structure.\n"
+    )
+    return prompt
+
+
 #print(build_template_prompt(get_descriptions_for_procedure("wypelnienie_dwupowierzchniowe", "descriptions.json")))
 
 def parse_fields_from_llm(llm_response: str) -> list[dict]:
@@ -77,6 +114,42 @@ def parse_fields_from_llm(llm_response: str) -> list[dict]:
         return json.loads(llm_response)
     except Exception as e:
         raise ValueError(f"Błąd parsowania odpowiedzi LLM jako JSON: {e}\nOdpowiedź:\n{llm_response}")
+    
+
+def parse_fields_from_llm2(xml_str: str):
+    """
+    Parses fields and options from LLM XML response.
+
+    Args:
+        xml_str (str): XML string returned by LLM
+
+    Returns:
+        list[dict]: List of dicts with field name and options
+    """
+    fields = []
+    # Spróbuj znaleźć tylko główną strukturę XML (jeśli LLM czasem dorzuci coś przed/po)
+    try:
+        start_idx = xml_str.index('<response>')
+        end_idx = xml_str.index('</response>') + len('</response>')
+        xml_core = xml_str[start_idx:end_idx]
+    except ValueError:
+        # Jeśli nie znajdziesz tagów – zwróć pustą listę lub zgłoś błąd
+        return []
+    
+    # Parsuj XML
+    root = ET.fromstring(xml_core)
+    for field in root.findall("field"):
+        name = field.find("name").text.strip()
+        options = [
+            opt.text.strip() for opt in field.find("options").findall("option")
+            if opt.text and opt.text.strip()
+        ]
+        fields.append({
+            "field": name,
+            "options": options
+        })
+    return fields
+
 
 def build_story_template_prompt(fields: list[dict]) -> str:
     """
